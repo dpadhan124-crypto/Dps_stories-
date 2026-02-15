@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPS Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #020617; color: #f8fafc; font-family: sans-serif; }
+        .input-box { background: #0f172a; border: 1px solid #1e293b; color: white; border-radius: 0.75rem; padding: 0.75rem; width: 100%; }
+        .hidden-panel { display: none; }
+        .visible-panel { display: block; }
+    </style>
+</head>
+<body class="p-6">
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="max-w-2xl mx-auto">
+        <header class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl font-bold text-yellow-500">DPS Admin</h1>
+            <div id="status-indicator" class="text-xs text-gray-500 italic">Connecting to Cloud...</div>
+        </header>
+
+        <!-- Price Section -->
+        <div class="bg-slate-900/50 p-6 rounded-3xl border border-slate-800 mb-8">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">💰 प्लान की कीमतें बदलें</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="text-xs text-gray-500 block mb-1">Standard (₹)</label>
+                    <input type="number" id="std-input" class="input-box">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 block mb-1">VIP (₹)</label>
+                    <input type="number" id="vip-input" class="input-box">
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Info Section -->
+        <div class="bg-slate-900/50 p-6 rounded-3xl border border-slate-800 mb-8">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">💳 पेमेंट डिटेल्स</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-gray-500 block mb-1">UPI ID</label>
+                    <input type="text" id="upi-input" class="input-box" placeholder="e.g. name@upi">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500 block mb-1">QR Code Image URL</label>
+                    <input type="text" id="qr-url-input" class="input-box" placeholder="https://example.com/qr.jpg">
+                    <p class="text-[10px] text-gray-500 mt-1">Note: Enter the direct link to your QR image.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Story Section -->
+        <div class="bg-slate-900/50 p-6 rounded-3xl border border-slate-800 mb-8">
+            <h2 class="text-lg font-bold mb-4">📚 कहानियों की लिस्ट (Home Text)</h2>
+            <p class="text-xs text-gray-500 mb-2">नीचे दी गई लिस्ट होमपेज के डिस्क्रिप्शन में दिखेगी।</p>
+            <div class="flex gap-2 mb-6">
+                <input type="text" id="story-input" placeholder="कहानी का नाम..." class="input-box">
+                <button onclick="addStory()" class="bg-yellow-500 text-black px-6 rounded-xl font-bold">Add</button>
+            </div>
+            <div id="story-list" class="space-y-2 max-h-60 overflow-y-auto">
+                <!-- List items -->
+            </div>
+        </div>
+
+        <button id="save-btn" onclick="saveAll()" class="w-full bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-bold text-lg shadow-xl transition mb-10">
+            ✅ क्लाउड में सेव करें (Save to Cloud)
+        </button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'dps-stories-v2';
+
+        let data = { 
+            prices: { standard: 149, vip: 249 }, 
+            stories: ["Shunya Samrat", "The Warrior"],
+            upi: "padhand171@okicici",
+            qrUrl: "qr.jpg"
+        };
+
+        const initAuth = async () => {
+            try {
+                await signInAnonymously(auth);
+            } catch (err) {
+                console.error("Auth error", err);
+            }
+        };
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'siteSettings');
+                onSnapshot(docRef, (snap) => {
+                    if (snap.exists()) {
+                        data = snap.data();
+                        document.getElementById('status-indicator').innerText = "Live: Cloud Connected";
+                        render();
+                    } else {
+                        document.getElementById('status-indicator').innerText = "First time setup: Enter details and save.";
+                        render();
+                    }
+                }, (error) => {
+                    console.error("Snapshot error:", error);
+                });
+            }
+        });
+
+        function render() {
+            document.getElementById('std-input').value = data.prices.standard || 149;
+            document.getElementById('vip-input').value = data.prices.vip || 249;
+            document.getElementById('upi-input').value = data.upi || "";
+            document.getElementById('qr-url-input').value = data.qrUrl || "qr.jpg";
+            
+            const list = document.getElementById('story-list');
+            list.innerHTML = '';
+            if (data.stories && data.stories.length > 0) {
+                data.stories.forEach((s, i) => {
+                    list.innerHTML += `
+                        <div class="flex justify-between items-center bg-black/40 p-3 rounded-xl border border-slate-800">
+                            <span>${s}</span>
+                            <button onclick="removeStory(${i})" class="text-red-500 font-bold px-2">Delete</button>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        window.addStory = () => {
+            const val = document.getElementById('story-input').value.trim();
+            if (val) { 
+                if(!data.stories) data.stories = [];
+                data.stories.push(val); 
+                document.getElementById('story-input').value = ''; 
+                render(); 
+            }
+        };
+
+        window.removeStory = (i) => { 
+            data.stories.splice(i, 1); 
+            render(); 
+        };
+
+        window.saveAll = async () => {
+            const btn = document.getElementById('save-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "Saving...";
+            btn.disabled = true;
+
+            data.prices.standard = parseInt(document.getElementById('std-input').value) || 0;
+            data.prices.vip = parseInt(document.getElementById('vip-input').value) || 0;
+            data.upi = document.getElementById('upi-input').value.trim();
+            data.qrUrl = document.getElementById('qr-url-input').value.trim();
+
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'siteSettings');
+                await setDoc(docRef, data);
+                btn.innerText = "✅ Saved Successfully!";
+                setTimeout(() => { 
+                    btn.innerText = originalText; 
+                    btn.disabled = false; 
+                }, 2000);
+            } catch (e) {
+                console.error(e);
+                btn.innerText = "Error Saving";
+                setTimeout(() => { btn.innerText = originalText; btn.disabled = false; }, 2000);
+            }
+        };
+    </script>
+</body>
+</html>
+
