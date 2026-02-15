@@ -3,111 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DPS Stories | Premium Audio</title>
+    <title>DPS Stories | प्रीमियम सब्सक्रिप्शन</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js" type="module"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js" type="module"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js" type="module"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Hind', sans-serif; background-color: #0f172a; color: #f1f5f9; -webkit-tap-highlight-color: transparent; }
-        .premium-bg { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); }
-        .gold-glow { text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
-        .glass-card { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(251, 191, 36, 0.1); }
-        .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; padding: 1rem; }
+        body {
+            font-family: 'Hind', sans-serif;
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+        .premium-gradient {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        .gold-text {
+            color: #fbbf24;
+        }
+        .card-glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .loading-skeleton {
+            background: #1e293b;
+            color: transparent;
+            border-radius: 4px;
+            animation: pulse 1.5s infinite;
+        }
     </style>
 </head>
-<body class="antialiased premium-bg min-h-screen pb-10">
+<body class="antialiased">
 
-    <!-- Hero Section -->
-    <section class="pt-12 pb-8 px-6 text-center">
-        <div class="inline-block p-4 rounded-full bg-yellow-500/10 mb-4 border border-yellow-500/20">
-            <span class="text-4xl">🎧</span>
+    <!-- Header / Hero Section -->
+    <header class="relative py-16 px-6 text-center premium-gradient border-b border-yellow-900/30">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-6xl mb-4">🎧</div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 gold-text">DPS Stories</h1>
+            <p class="text-xl md:text-2xl font-semibold mb-6 text-gray-300">प्रीमियम सब्सक्रिप्शन सर्विस</p>
+            <p class="text-lg mb-8 text-gray-400 max-w-2xl mx-auto" id="story-description">
+                Shunya Samrat, The Warrior और एक्सक्लूसिव ऑडियो कहानियों का एकमात्र ठिकाना।
+            </p>
+            <div class="bg-yellow-900/20 p-4 rounded-xl border border-yellow-700/30 inline-block mb-8">
+                <p class="text-sm md:text-base italic">
+                    क्या आप भी उन कहानियों की तलाश में थक चुके हैं जो YouTube पर डिलीट हो गई हैं? हम लाते हैं वो जो कहीं और नहीं।
+                </p>
+            </div>
         </div>
-        <h1 class="text-4xl font-bold gold-text mb-2 gold-glow">DPS Stories</h1>
-        <p class="text-yellow-500 font-medium tracking-wide mb-6">प्रीमियम सब्सक्रिप्शन सर्विस</p>
-        
-        <div id="stories-container" class="max-w-md mx-auto bg-slate-800/40 p-4 rounded-2xl border border-slate-700 text-sm leading-relaxed text-gray-300 italic">
-            लोड हो रहा है...
+    </header>
+
+    <!-- Transparency Section -->
+    <section class="py-12 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-center flex items-center justify-center gap-2">
+                <span>🛡️</span> हमारी पारदर्शिता
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card-glass p-6 rounded-2xl text-center">
+                    <div class="text-3xl mb-3">🔓</div>
+                    <h3 class="font-bold mb-2">पहले ग्रुप एक्सेस</h3>
+                    <p class="text-sm text-gray-400">हम आपको पेमेंट से पहले प्रीमियम ग्रुप में जोड़ देंगे ताकि आप कंटेंट देख सकें।</p>
+                </div>
+                <div class="card-glass p-6 rounded-2xl text-center border-yellow-500/50">
+                    <div class="text-3xl mb-3">⏱️</div>
+                    <h3 class="font-bold mb-2">5 मिनट का समय</h3>
+                    <p class="text-sm text-gray-400">ग्रुप चेक करने के लिए आपके पास 5 मिनट होंगे, फिर पेमेंट पूरा करें।</p>
+                </div>
+                <div class="card-glass p-6 rounded-2xl text-center">
+                    <div class="text-3xl mb-3">✅</div>
+                    <h3 class="font-bold mb-2">भरोसे की गारंटी</h3>
+                    <p class="text-sm text-gray-400">पेमेंट न होने पर सिस्टम ऑटोमैटिक रिमूव कर देगा। नो फ्रॉड, नो रिस्क।</p>
+                </div>
+            </div>
+            <div class="mt-10 text-center italic text-gray-300 border-l-4 border-yellow-500 pl-4 py-2 bg-slate-800/50 rounded-r-lg">
+                "मेरा मकसद बिजनेस से पहले आपका भरोसा जीतना है।" — <span class="font-bold gold-text">@D_padhan</span>
+            </div>
         </div>
     </section>
 
     <!-- Subscription Plans -->
-    <main class="px-6 space-y-6 max-w-md mx-auto">
-        <!-- Standard -->
-        <div class="glass-card p-6 rounded-3xl relative overflow-hidden">
-            <h3 class="text-xl font-bold mb-1">Standard Plan</h3>
-            <p class="text-xs text-gray-400 mb-4">"Daily Thrill"</p>
-            <div class="flex items-baseline gap-1 mb-6">
-                <span class="text-3xl font-bold">₹<span id="std-price">...</span></span>
-                <span class="text-gray-500 text-sm">/ महीना</span>
-            </div>
-            <ul class="text-sm space-y-2 mb-6 text-gray-300">
-                <li class="flex items-center gap-2">✅ सभी पुरानी कहानियों का एक्सेस</li>
-                <li class="flex items-center gap-2">✅ रोज़ाना 1 नया एपिसोड</li>
-            </ul>
-            <button onclick="window.location.href='https://t.me/D_padhan'" class="w-full py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-bold transition">अभी चुनें</button>
-        </div>
-
-        <!-- VIP -->
-        <div class="glass-card p-6 rounded-3xl border-2 border-yellow-500 relative shadow-2xl shadow-yellow-500/10">
-            <div class="absolute top-0 right-0 bg-yellow-500 text-black px-3 py-1 text-xs font-bold rounded-bl-xl uppercase">Best Value</div>
-            <h3 class="text-xl font-bold mb-1">VIP Plan</h3>
-            <p class="text-xs text-yellow-500/80 mb-4">"Binge Master"</p>
-            <div class="flex items-baseline gap-1 mb-6">
-                <span class="text-3xl font-bold text-yellow-500">₹<span id="vip-price">...</span></span>
-                <span class="text-gray-500 text-sm">/ महीना</span>
-            </div>
-            <ul class="text-sm space-y-2 mb-6 text-gray-300">
-                <li class="flex items-center gap-2 font-semibold">🌟 फुल एक्सेस + 5 डेली एपिसोड्स</li>
-                <li class="flex items-center gap-2 font-semibold">🌟 सबसे तेज़ी से कहानियाँ खत्म करें</li>
-            </ul>
-            <button onclick="window.location.href='https://t.me/D_padhan'" class="w-full py-4 bg-yellow-500 hover:bg-yellow-400 text-black rounded-xl font-bold transition text-lg">VIP एक्सेस लें</button>
-        </div>
-    </main>
-
-    <!-- Payment -->
-    <section class="mt-10 px-6 max-w-md mx-auto">
-        <div class="glass-card p-6 rounded-3xl border-dashed border-2 border-yellow-500/30 text-center">
-            <h2 class="font-bold mb-4 flex items-center justify-center gap-2">💳 पेमेंट और जॉइनिंग</h2>
-            <div class="bg-black/30 p-3 rounded-xl mb-4">
-                <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">UPI ID</p>
-                <p class="text-lg font-mono font-bold select-all">padhand171@okicici</p>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="bg-white p-2 rounded-xl w-48 h-48 mb-4 shadow-xl">
-                    <img src="https://files.catbox.moe/8g6guc.jpg" alt="QR" class="w-full h-full object-contain">
+    <section class="py-16 px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">🚀 सब्सक्रिप्शन प्लान्स</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Standard Plan -->
+                <div class="card-glass p-8 rounded-3xl relative overflow-hidden flex flex-col">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Standard Plan</h3>
+                        <p class="text-yellow-500 font-medium">"Daily Thrill"</p>
+                    </div>
+                    <div class="text-4xl font-bold mb-6">₹<span id="std-price-display">149</span> <span class="text-lg text-gray-400 font-normal">/ महीना</span></div>
+                    <ul class="space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2">✅ पुरानी सभी कहानियों का एक्सेस</li>
+                        <li class="flex items-center gap-2">✅ रोज़ाना 1 नया एपिसोड अपलोड</li>
+                    </ul>
+                    <button onclick="window.location.href='https://t.me/D_padhan'" class="w-full py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-bold transition">अभी चुनें</button>
                 </div>
-                <button onclick="downloadQR()" class="text-xs bg-slate-800 px-4 py-2 rounded-full border border-slate-700 hover:bg-slate-700 transition">📥 QR डाउनलोड करें</button>
+
+                <!-- VIP Plan -->
+                <div class="card-glass p-8 rounded-3xl border-2 border-yellow-500 relative overflow-hidden flex flex-col md:scale-105 shadow-2xl shadow-yellow-500/10">
+                    <div class="absolute top-0 right-0 bg-yellow-500 text-black px-4 py-1 font-bold text-sm rounded-bl-xl">बेस्ट वैल्यू ⭐</div>
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">VIP Plan</h3>
+                        <p class="text-yellow-500 font-medium">"Binge Master"</p>
+                    </div>
+                    <div class="text-4xl font-bold mb-6">₹<span id="vip-price-display">249</span> <span class="text-lg text-gray-400 font-normal">/ महीना</span></div>
+                    <ul class="space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2 font-semibold">🌟 फुल एक्सेस + 5 डेली एपिसोड्स</li>
+                        <li class="flex items-center gap-2 font-semibold">🌟 सबसे तेज़ी से कहानियाँ खत्म करें</li>
+                    </ul>
+                    <button onclick="window.location.href='https://t.me/D_padhan'" class="w-full py-4 bg-yellow-500 hover:bg-yellow-400 text-black rounded-xl font-bold transition animate-pulse-slow text-lg">VIP एक्सेस लें</button>
+                </div>
             </div>
-        </div>
-        
-        <div class="mt-6 text-center">
-            <button id="openTC" class="text-xs text-gray-500 underline">नियम और शर्तें पढ़ें</button>
         </div>
     </section>
 
-    <!-- Terms Modal -->
-    <div id="tcModal" class="modal">
-        <div class="bg-slate-900 w-full max-w-sm rounded-3xl overflow-hidden border border-yellow-900/40">
+    <!-- Payment & Joining -->
+    <section class="py-16 px-6">
+        <div class="max-w-3xl mx-auto card-glass p-8 rounded-3xl border-dashed border-2 border-yellow-700/50">
+            <h2 class="text-3xl font-bold mb-8 text-center flex items-center justify-center gap-2">
+                <span>💳</span> पेमेंट और जॉइनिंग
+            </h2>
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="bg-yellow-500 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <p>सबसे पहले <span class="gold-text font-bold">@D_padhan</span> को मैसेज कर ग्रुप लिंक मांगें।</p>
+                </div>
+                <div class="flex gap-1">
+                    <div class="bg-yellow-500 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div class="w-full">
+                        <p class="mb-4">अगले 5 मिनट के अंदर UPI या QR पर पेमेंट करें:</p>
+                        <div class="bg-slate-800 p-1 rounded-xl border border-slate-700 text-center mb-6">
+                            <p class="text-xs text-gray-400 mb-1">UPI ID</p>
+                            <p id="upi-display" class="text-lg font-mono font-bold select-all">padhand171@okicici</p>
+                        </div>
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="bg-white p-3 rounded-2xl w-64 h-64 flex items-center justify-center shadow-lg">
+                                <img id="qrImage" src="qr.jpg" alt="QR Code" class="w-full h-full object-contain">
+                            </div>
+                            <button onclick="downloadQR()" class="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-6 py-2 rounded-full text-sm font-bold transition">
+                                📥 QR कोड डाउनलोड करें
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="bg-yellow-500 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <p>पेमेंट का स्क्रीनशॉट <span class="gold-text font-bold">@D_padhan</span> को भेजें।</p>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-center border-t border-slate-800 pt-6">
+                <button id="openTC" class="text-sm underline text-gray-400 hover:text-white transition">नियम और शर्तें (Terms & Conditions) पढ़ें</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 text-center border-t border-slate-800">
+        <p class="text-gray-500 text-sm">© 2026 DPS Stories. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="tcModal" class="modal items-center justify-center p-4">
+        <div class="bg-slate-900 w-full max-w-2xl rounded-3xl overflow-hidden border border-yellow-900/50 shadow-2xl">
             <div class="p-6 border-b border-slate-800 flex justify-between items-center">
-                <h2 class="font-bold">नियम और शर्तें</h2>
-                <button id="closeTC" class="text-2xl">&times;</button>
+                <h2 class="text-xl font-bold text-yellow-500">⚠️ नियम और शर्तें</h2>
+                <button id="closeTC" class="text-2xl hover:text-red-500 transition">&times;</button>
             </div>
-            <div class="p-6 text-sm space-y-3 text-gray-400 max-h-80 overflow-y-auto">
-                <p>• <strong>नो रिफंड:</strong> पेमेंट के बाद पैसा वापस नहीं होगा।</p>
-                <p>• <strong>शेयरिंग:</strong> कंटेंट शेयर करने पर बैन लगा दिया जाएगा।</p>
-                <p>• <strong>वैधता:</strong> प्लान 30 दिनों तक मान्य रहेगा।</p>
+            <div class="p-6 max-h-[70vh] overflow-y-auto space-y-4 text-sm md:text-base">
+                <div class="flex gap-3">
+                    <span class="text-yellow-500">•</span>
+                    <p><span class="font-bold">नो रिफंड:</span> पेमेंट के बाद किसी भी स्थिति में पैसा वापस नहीं होगा।</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="text-yellow-500">•</span>
+                    <p><span class="font-bold">शेयरिंग मना है:</span> कंटेंट शेयर करने पर मेंबरशिप रद्द कर दी जाएगी।</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="text-yellow-500">•</span>
+                    <p><span class="font-bold">अपलोड:</span> तकनीकी समस्या होने पर एपिसोड्स अगले दिन कवर किए जाएंगे।</p>
+                </div>
+                <div class="flex gap-3">
+                    <span class="text-yellow-500">•</span>
+                    <p><span class="font-bold">वैधता:</span> प्लान पेमेंट की तारीख से 30 दिनों तक मान्य रहेगा।</p>
+                </div>
             </div>
-            <div class="p-4 bg-slate-800/50">
-                <button id="agreeTC" class="w-full py-3 bg-yellow-500 text-black font-bold rounded-xl">समझ गया</button>
+            <div class="p-6 border-t border-slate-800 text-center">
+                <button id="agreeTC" class="bg-yellow-500 text-black px-12 py-3 rounded-xl font-bold transition hover:bg-yellow-400">ठीक है</button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = JSON.parse(__firebase_config);
@@ -116,40 +221,63 @@
         const db = getFirestore(app);
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'dps-stories-v2';
 
-        async function init() {
-            try {
-                await signInAnonymously(auth);
-                // Rule 1 & 3: Auth first, then strict path
+        const modal = document.getElementById("tcModal");
+        const btn = document.getElementById("openTC");
+        const closeBtn = document.getElementById("closeTC");
+        const agreeBtn = document.getElementById("agreeTC");
+
+        btn.onclick = () => modal.style.display = "flex";
+        closeBtn.onclick = () => modal.style.display = "none";
+        agreeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+
+        // Live Data Sync
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'siteSettings');
                 onSnapshot(docRef, (snap) => {
                     if (snap.exists()) {
                         const data = snap.data();
-                        document.getElementById('std-price').innerText = data.prices.standard;
-                        document.getElementById('vip-price').innerText = data.prices.vip;
-                        document.getElementById('stories-container').innerText = data.stories.join(", ") + " और एक्सक्लूसिव कहानियों का ठिकाना।";
+                        
+                        // Update Prices
+                        if(data.prices) {
+                            document.getElementById('std-price-display').innerText = data.prices.standard;
+                            document.getElementById('vip-price-display').innerText = data.prices.vip;
+                        }
+
+                        // Update Stories Description
+                        if(data.stories && data.stories.length > 0) {
+                            const storyStr = data.stories.join(", ") + " और एक्सक्लूसिव ऑडियो कहानियों का एकमात्र ठिकाना।";
+                            document.getElementById('story-description').innerText = storyStr;
+                        }
+
+                        // Update Payment Info
+                        if(data.upi) document.getElementById('upi-display').innerText = data.upi;
+                        if(data.qrUrl) document.getElementById('qrImage').src = data.qrUrl;
                     }
-                }, (err) => console.log("Waiting for data..."));
-            } catch (e) { console.error(e); }
-        }
+                }, (error) => console.error(error));
+            } else {
+                signInAnonymously(auth);
+            }
+        });
 
         window.downloadQR = async () => {
-            const url = "https://files.catbox.moe/8g6guc.jpg";
+            const imageUrl = document.getElementById('qrImage').src;
             try {
-                const res = await fetch(url);
-                const blob = await res.blob();
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = 'DPS_Payment_QR.jpg';
+                a.href = url;
+                a.download = 'DPS_Stories_QR.jpg';
+                document.body.appendChild(a);
                 a.click();
-            } catch { window.open(url, '_blank'); }
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (error) {
+                window.open(imageUrl, '_blank');
+            }
         };
-
-        const modal = document.getElementById('tcModal');
-        document.getElementById('openTC').onclick = () => modal.style.display = 'flex';
-        document.getElementById('closeTC').onclick = () => modal.style.display = 'none';
-        document.getElementById('agreeTC').onclick = () => modal.style.display = 'none';
-
-        init();
     </script>
 </body>
 </html>
