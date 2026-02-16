@@ -2,282 +2,308 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DPS Stories | प्रीमियम सब्सक्रिप्शन</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DPS Stories | Premium App</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Hind:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --app-bg: #05070a;
+            --card-bg: #11141b;
+            --accent: #fbbf24;
+            --accent-soft: rgba(251, 191, 36, 0.15);
+        }
         body {
-            font-family: 'Hind', sans-serif;
-            background-color: #0f172a;
-            color: #f1f5f9;
+            font-family: 'Hind', 'Inter', sans-serif;
+            background-color: var(--app-bg);
+            color: #ffffff;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
-        .premium-gradient {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        .glass-nav {
+            background: rgba(5, 7, 10, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .gold-text {
-            color: #fbbf24;
-        }
-        .card-glass {
-            background: rgba(30, 41, 59, 0.7);
+        .glass-card {
+            background: rgba(17, 20, 27, 0.6);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .glow-gold {
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+        }
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 75px;
+            background: rgba(17, 20, 27, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+        .plan-scale:active {
+            transform: scale(0.96);
         }
         .modal {
-            display: none; 
+            display: none;
             position: fixed;
-            z-index: 50;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.85);
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        .animate-pulse-slow {
-            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .loading-skeleton {
-            background: #1e293b;
-            color: transparent;
-            border-radius: 4px;
-            animation: pulse 1.5s infinite;
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="pb-28 no-scrollbar">
 
-    <!-- Header / Hero Section -->
-    <header class="relative py-16 px-6 text-center premium-gradient border-b border-yellow-900/30">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-6xl mb-4">🎧</div>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 gold-text">DPS Stories</h1>
-            <p class="text-xl md:text-2xl font-semibold mb-6 text-gray-300">प्रीमियम सब्सक्रिप्शन सर्विस</p>
-            <p class="text-lg mb-8 text-gray-400 max-w-2xl mx-auto" id="story-description">
-                Shunya Samrat, The Warrior और एक्सक्लूसिव ऑडियो कहानियों का एकमात्र ठिकाना।
-            </p>
-            <div class="bg-yellow-900/20 p-4 rounded-xl border border-yellow-700/30 inline-block mb-8">
-                <p class="text-sm md:text-base italic">
-                    क्या आप भी उन कहानियों की तलाश में थक चुके हैं जो YouTube पर डिलीट हो गई हैं? हम लाते हैं वो जो कहीं और नहीं।
-                </p>
+    <!-- Top App Bar -->
+    <nav class="sticky top-0 z-50 glass-nav px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-yellow-500/20">
+                <span class="text-xl">🎧</span>
+            </div>
+            <div>
+                <h1 class="font-black text-lg leading-tight tracking-tighter">DPS STORIES</h1>
+                <p class="text-[9px] text-accent uppercase font-black tracking-[0.2em]">Premium Audio</p>
+            </div>
+        </div>
+        <a href="https://t.me/dps_supportbot" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
+            <span class="text-lg">💬</span>
+        </a>
+    </nav>
+
+    <!-- Hero Banner -->
+    <header class="p-6">
+        <div class="relative overflow-hidden bg-gradient-to-br from-yellow-500/10 via-transparent to-transparent p-7 rounded-[2.5rem] border border-yellow-500/10">
+            <div class="relative z-10">
+                <span class="bg-accent/20 text-accent text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-accent/20 mb-4 inline-block">Exclusive Content</span>
+                <h2 class="text-3xl font-black leading-tight mb-3">YouTube की डिलीटेड कहानियों का खजाना</h2>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">Shunya Samrat, The Warrior और वो सभी ऑडियो कहानियाँ जो अब कहीं नहीं मिलतीं, सिर्फ DPS Stories पर उपलब्ध हैं।</p>
+                <div class="flex gap-4">
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-slate-800 border-2 border-app-bg flex items-center justify-center text-[10px]">🔥</div>
+                        <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-app-bg flex items-center justify-center text-[10px]">⭐</div>
+                        <div class="w-8 h-8 rounded-full bg-slate-600 border-2 border-app-bg flex items-center justify-center text-[10px]">🛡️</div>
+                    </div>
+                    <p class="text-[10px] text-gray-500 self-center">5,000+ प्रीमियम मेंबर्स</p>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Transparency Section -->
-    <section class="py-12 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8 text-center flex items-center justify-center gap-2">
-                <span>🛡️</span> हमारी पारदर्शिता
-            </h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="card-glass p-6 rounded-2xl text-center">
-                    <div class="text-3xl mb-3">🔓</div>
-                    <h3 class="font-bold mb-2">पहले ग्रुप एक्सेस</h3>
-                    <p class="text-sm text-gray-400">हम आपको पेमेंट से पहले प्रीमियम ग्रुप में जोड़ देंगे ताकि आप कंटेंट देख सकें।</p>
-                </div>
-                <div class="card-glass p-6 rounded-2xl text-center border-yellow-500/50">
-                    <div class="text-3xl mb-3">⏱️</div>
-                    <h3 class="font-bold mb-2">5 मिनट का समय</h3>
-                    <p class="text-sm text-gray-400">ग्रुप चेक करने के लिए आपके पास 5 मिनट होंगे, फिर पेमेंट पूरा करें।</p>
-                </div>
-                <div class="card-glass p-6 rounded-2xl text-center">
-                    <div class="text-3xl mb-3">✅</div>
-                    <h3 class="font-bold mb-2">भरोसे की गारंटी</h3>
-                    <p class="text-sm text-gray-400">पेमेंट न होने पर सिस्टम ऑटोमैटिक रिमूव कर देगा। नो फ्रॉड, नो रिस्क।</p>
+    <!-- Plans Section -->
+    <section class="px-6 space-y-4">
+        <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-black text-gray-500 uppercase tracking-widest">Subscription Plans</h3>
+            <span class="text-[10px] text-accent font-bold">Best Offers</span>
+        </div>
+
+        <!-- Lite -->
+        <div class="plan-scale glass-card p-5 rounded-3xl flex items-center justify-between transition-transform duration-200">
+            <div class="flex gap-4 items-center">
+                <div class="w-12 h-12 bg-slate-800 rounded-2xl flex items-center justify-center text-xl">☁️</div>
+                <div>
+                    <h4 class="font-bold">Lite Plan</h4>
+                    <p class="text-[9px] text-gray-500 uppercase font-black">बेसिक एक्सेस</p>
                 </div>
             </div>
-            <div class="mt-10 text-center italic text-gray-300 border-l-4 border-yellow-500 pl-4 py-2 bg-slate-800/50 rounded-r-lg">
-                "मेरा मकसद बिजनेस से पहले आपका भरोसा जीतना है।" — <span class="font-bold gold-text">@D_padhan</span>
+            <div class="text-right">
+                <div class="text-xl font-black text-white">₹49</div>
+                <button onclick="window.location.href='https://t.me/dps_supportbot'" class="text-[9px] font-black uppercase text-accent mt-1">Select</button>
             </div>
         </div>
-    </section>
 
-    <!-- Subscription Plans -->
-    <section class="py-16 px-6">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center">🚀 सब्सक्रिप्शन प्लान्स</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Standard Plan -->
-                <div class="card-glass p-8 rounded-3xl relative overflow-hidden flex flex-col">
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold mb-2">Standard Plan</h3>
-                        <p class="text-yellow-500 font-medium">"Daily Thrill"</p>
-                    </div>
-                    <div class="text-4xl font-bold mb-6">₹<span id="std-price-display">99</span> <span class="text-lg text-gray-400 font-normal">/ महीना</span></div>
-                    <ul class="space-y-3 mb-8 flex-grow">
-                        <li class="flex items-center gap-2">✅ पुरानी सभी कहानियों का एक्सेस</li>
-                        <li class="flex items-center gap-2">✅ रोज़ाना 1 नया एपिसोड अपलोड</li>
-                    </ul>
-                    <button onclick="window.location.href='https://t.me/D_padhan'" class="w-full py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-bold transition">अभी चुनें</button>
-                </div>
-
-                <!-- VIP Plan -->
-                <div class="card-glass p-8 rounded-3xl border-2 border-yellow-500 relative overflow-hidden flex flex-col md:scale-105 shadow-2xl shadow-yellow-500/10">
-                    <div class="absolute top-0 right-0 bg-yellow-500 text-black px-4 py-1 font-bold text-sm rounded-bl-xl">बेस्ट वैल्यू ⭐</div>
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold mb-2">VIP Plan</h3>
-                        <p class="text-yellow-500 font-medium">"Binge Master"</p>
-                    </div>
-                    <div class="text-4xl font-bold mb-6">₹<span id="vip-price-display">149</span> <span class="text-lg text-gray-400 font-normal">/ महीना</span></div>
-                    <ul class="space-y-3 mb-8 flex-grow">
-                        <li class="flex items-center gap-2 font-semibold">🌟 फुल एक्सेस + 5 डेली एपिसोड्स</li>
-                        <li class="flex items-center gap-2 font-semibold">🌟 सबसे तेज़ी से कहानियाँ खत्म करें</li>
-                    </ul>
-                    <button onclick="window.location.href='https://t.me/D_padhan'" class="w-full py-4 bg-yellow-500 hover:bg-yellow-400 text-black rounded-xl font-bold transition animate-pulse-slow text-lg">VIP एक्सेस लें</button>
+        <!-- Standard -->
+        <div class="plan-scale glass-card p-5 rounded-3xl flex items-center justify-between border-blue-500/20">
+            <div class="flex gap-4 items-center">
+                <div class="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-2xl flex items-center justify-center text-xl">⚡</div>
+                <div>
+                    <h4 class="font-bold">Standard Plan</h4>
+                    <p class="text-[9px] text-blue-400 uppercase font-black">रोज़ाना 1 एपिसोड</p>
                 </div>
             </div>
+            <div class="text-right">
+                <div class="text-xl font-black text-white">₹99</div>
+                <button onclick="window.location.href='https://t.me/dps_supportbot'" class="text-[9px] font-black uppercase text-blue-400 mt-1">Select</button>
+            </div>
         </div>
+
+        <!-- VIP -->
+    
+    <div class="relative group bg-zinc-900 border border-white/5 p-8 rounded-[2.5rem] shadow-2xl overflow-hidden max-w-sm w-full">
+        
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-yellow-600/20 rounded-full blur-[80px] group-hover:bg-yellow-500/30 transition-all duration-700"></div>
+
+        <div class="relative z-10 flex flex-col items-center text-center">
+            <span class="bg-yellow-500/10 text-yellow-500 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter mb-4 border border-yellow-500/20">
+                Exclusive Plan
+            </span>
+
+            <h2 class="text-5xl font-black italic tracking-tighter mb-2 bg-gradient-to-tr from-[#996515] via-[#F1D279] to-[#996515] bg-clip-text text-transparent drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">
+                ULTIMATE
+            </h2>
+            
+            <p class="text-zinc-400 text-sm font-medium mb-8">Unlock the full potential of your experience with 5 new  episide dally.</p>
+
+            <div class="flex items-baseline gap-1 mb-8">
+                <span class="text-4xl font-black text-white italic">₹149</span>
+                <span class="text-zinc-500 text-xs font-bold">/ MONTH</span>
+            </div>
+
+            <button class="w-full bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-black py-4 rounded-2xl text-sm font-black uppercase tracking-widest shadow-[0_10px_20px_-10px_rgba(191,149,63,0.5)] hover:scale-[1.02] transition-transform active:scale-95">
+                GET STARTED NOW
+            </button>
+        </div>
+    </div>
+
+        </br> </br> </br> </br>
     </section>
 
-    <!-- Payment & Joining -->
-    <section class="py-16 px-6">
-        <div class="max-w-3xl mx-auto card-glass p-8 rounded-3xl border-dashed border-2 border-yellow-700/50">
-            <h2 class="text-3xl font-bold mb-8 text-center flex items-center justify-center gap-2">
-                <span>💳</span> पेमेंट और जॉइनिंग
-            </h2>
-            <div class="space-y-6">
-                <div class="flex gap-4">
-                    <div class="bg-yellow-500 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
-                    <p>सबसे पहले <span class="gold-text font-bold">@D_padhan</span> को मैसेज कर ग्रुप लिंक मांगें।</p>
-                </div>
-                <div class="flex gap-1">
-                    <div class="bg-yellow-500 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
-                    <div class="w-full">
-                        <p class="mb-4">अगले 5 मिनट के अंदर UPI या QR पर पेमेंट करें:</p>
-                        <div class="bg-slate-800 p-1 rounded-xl border border-slate-700 text-center mb-6">
-                            <p class="text-xs text-gray-400 mb-1">UPI ID</p>
-                            <p id="upi-display" class="text-lg font-mono font-bold select-all">padhand171@okicici</p>
-                        </div>
-                        <div class="flex flex-col items-center gap-4">
-                            <div class="bg-white p-3 rounded-2xl w-64 h-64 flex items-center justify-center shadow-lg">
-                                <img id="qrImage" src="qr.jpg" alt="QR Code" class="w-full h-full object-contain">
-                            </div>
-                            <button onclick="downloadQR()" class="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-6 py-2 rounded-full text-sm font-bold transition">
-                                📥 QR कोड डाउनलोड करें
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="bg-yellow-500 text-black w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
-                    <p>पेमेंट का स्क्रीनशॉट <span class="gold-text font-bold">@D_padhan</span> को भेजें।</p>
-                </div>
+    <!-- Payment Gateway UI -->
+    <section class="p-6">
+        <div class="bg-white/5 rounded-[2.5rem] border border-white/5 p-8 flex flex-col items-center">
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-8">Pay & Join Instantly</h3>
+            
+            <div class="bg-black/50 p-4 rounded-2xl w-full border border-white/5 mb-8 text-center" onclick="copyUPI()">
+                <span class="text-[8px] text-gray-500 font-black uppercase mb-1 block">Click to Copy UPI ID</span>
+                <p id="upi-text" class="text-accent font-mono font-bold text-lg">padhand171@okicici</p>
+            </div>
+
+            <!-- QR Display -->
+            <div class="bg-white p-3 rounded-3xl mb-8 shadow-2xl relative">
+                <img src="https://i.ibb.co/ksM3hDHw/POUNLIYSYJYVFBF.jpg" alt="QR Code" class="w-52 h-52 object-contain rounded-xl">
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-accent text-black text-[8px] font-black px-4 py-1 rounded-full uppercase shadow-lg">Scan to Pay</div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 w-full">
+                <button onclick="downloadQR()" class="bg-white/5 text-white py-4 rounded-2xl text-[10px] font-bold border border-white/10 flex items-center justify-center gap-2">
+                    <span>📥</span> QR Save
+                </button>
+                <button onclick="window.location.href='https://t.me/dps_supportbot'" class="bg-white text-black py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest">
+                    Done Payment
+                </button>
             </div>
             
-            <div class="mt-10 text-center border-t border-slate-800 pt-6">
-                <button id="openTC" class="text-sm underline text-gray-400 hover:text-white transition">नियम और शर्तें (Terms & Conditions) पढ़ें</button>
-            </div>
+            <p class="text-[9px] text-gray-600 mt-8 text-center leading-relaxed">
+                स्क्रीनशॉट भेजें और 5 मिनट में अपना प्रीमियम एक्सेस पायें। <br>
+                सभी ट्रांजेक्शन 100% सुरक्षित हैं।
+            </p>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-10 text-center border-t border-slate-800">
-        <p class="text-gray-500 text-sm">© 2026 DPS Stories. All Rights Reserved.</p>
-    </footer>
+    <!-- Bottom Navigation Bar -->
+    <div class="tab-bar px-6">
+        <button class="flex flex-col items-center gap-1.5 text-accent" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <span class="text-xl">🏠</span>
+            <span class="text-[8px] font-black uppercase tracking-widest">Home</span>
+        </button>
+     <a href="Story.html">    <button class="flex flex-col items-center gap-1.5 text-gray-500" onclick="window.location.href='https://t.me/dps_supportbot'">
+            <span class="text-xl">🎧</span>
+            <span class="text-[8px] font-black uppercase tracking-widest">Stories</span>
+        </button></a>
+        <button class="flex flex-col items-center gap-1.5 text-gray-500" onclick="toggleModal('tcModal')">
+            <span class="text-xl">📜</span>
+            <span class="text-[8px] font-black uppercase tracking-widest">Rules</span>
+        </button>
+    </div>
 
-    <!-- Terms & Conditions Modal -->
-    <div id="tcModal" class="modal items-center justify-center p-4">
-        <div class="bg-slate-900 w-full max-w-2xl rounded-3xl overflow-hidden border border-yellow-900/50 shadow-2xl">
-            <div class="p-6 border-b border-slate-800 flex justify-between items-center">
-                <h2 class="text-xl font-bold text-yellow-500">⚠️ नियम और शर्तें</h2>
-                <button id="closeTC" class="text-2xl hover:text-red-500 transition">&times;</button>
+    <!-- T&C Modal -->
+    <div id="tcModal" class="modal">
+        <div class="bg-slate-900 w-full max-w-sm rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
+            <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
+                <h3 class="font-black text-sm text-accent uppercase tracking-widest">⚠️ जरूरी नियम</h3>
+                <button onclick="toggleModal('tcModal')" class="text-2xl text-gray-500">&times;</button>
             </div>
-            <div class="p-6 max-h-[70vh] overflow-y-auto space-y-4 text-sm md:text-base">
-                <div class="flex gap-3">
-                    <span class="text-yellow-500">•</span>
-                    <p><span class="font-bold">नो रिफंड:</span> पेमेंट के बाद किसी भी स्थिति में पैसा वापस नहीं होगा।</p>
+            <div class="p-8 space-y-6">
+                <div class="flex gap-4">
+                    <span class="text-2xl">🚫</span>
+                    <div>
+                        <h4 class="text-xs font-black text-white uppercase mb-1">नो रिफंड पॉलिसी</h4>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">एक बार पेमेंट होने के बाद किसी भी स्थिति में रिफंड संभव नहीं है।</p>
+                    </div>
                 </div>
-                <div class="flex gap-3">
-                    <span class="text-yellow-500">•</span>
-                    <p><span class="font-bold">शेयरिंग मना है:</span> कंटेंट शेयर करने पर मेंबरशिप रद्द कर दी जाएगी।</p>
+                <div class="flex gap-4">
+                    <span class="text-2xl">🔒</span>
+                    <div>
+                        <h4 class="text-xs font-black text-white uppercase mb-1">प्राइवेसी सुरक्षा</h4>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">कंटेंट शेयर करना या लिंक फॉरवर्ड करना सख्त मना है। पकड़े जाने पर ID बैन होगी।</p>
+                    </div>
                 </div>
-                <div class="flex gap-3">
-                    <span class="text-yellow-500">•</span>
-                    <p><span class="font-bold">अपलोड:</span> तकनीकी समस्या होने पर एपिसोड्स अगले दिन कवर किए जाएंगे।</p>
-                </div>
-                <div class="flex gap-3">
-                    <span class="text-yellow-500">•</span>
-                    <p><span class="font-bold">वैधता:</span> प्लान पेमेंट की तारीख से 30 दिनों तक मान्य रहेगा।</p>
+                <div class="flex gap-4">
+                    <span class="text-2xl">🤖</span>
+                    <div>
+                        <h4 class="text-xs font-black text-white uppercase mb-1">सपोर्ट हेल्प</h4>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">किसी भी दिक्कत के लिए @dps_supportbot पर तुरंत संपर्क करें।</p>
+                    </div>
                 </div>
             </div>
-            <div class="p-6 border-t border-slate-800 text-center">
-                <button id="agreeTC" class="bg-yellow-500 text-black px-12 py-3 rounded-xl font-bold transition hover:bg-yellow-400">ठीक है</button>
+            <div class="p-6 bg-white/5">
+                <button onclick="toggleModal('tcModal')" class="w-full py-4 bg-white text-black font-black rounded-2xl text-xs uppercase tracking-widest">मैंने पढ़ लिया है</button>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-28 left-1/2 -translate-x-1/2 bg-accent text-black px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-[200]">
+        UPI ID कॉपी हो गई!
+    </div>
 
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'dps-stories-v2';
+    <script>
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
 
-        const modal = document.getElementById("tcModal");
-        const btn = document.getElementById("openTC");
-        const closeBtn = document.getElementById("closeTC");
-        const agreeBtn = document.getElementById("agreeTC");
+        function copyUPI() {
+            const upi = document.getElementById('upi-text').innerText;
+            const el = document.createElement('textarea');
+            el.value = upi;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            const toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 2000);
+        }
 
-        btn.onclick = () => modal.style.display = "flex";
-        closeBtn.onclick = () => modal.style.display = "none";
-        agreeBtn.onclick = () => modal.style.display = "none";
-        window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
-
-        // Live Data Sync
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'siteSettings');
-                onSnapshot(docRef, (snap) => {
-                    if (snap.exists()) {
-                        const data = snap.data();
-                        
-                        // Update Prices
-                        if(data.prices) {
-                            document.getElementById('std-price-display').innerText = data.prices.standard;
-                            document.getElementById('vip-price-display').innerText = data.prices.vip;
-                        }
-
-                        // Update Stories Description
-                        if(data.stories && data.stories.length > 0) {
-                            const storyStr = data.stories.join(", ") + " और एक्सक्लूसिव ऑडियो कहानियों का एकमात्र ठिकाना।";
-                            document.getElementById('story-description').innerText = storyStr;
-                        }
-
-                        // Update Payment Info
-                        if(data.upi) document.getElementById('upi-display').innerText = data.upi;
-                        if(data.qrUrl) document.getElementById('qrImage').src = data.qrUrl;
-                    }
-                }, (error) => console.error(error));
-            } else {
-                signInAnonymously(auth);
-            }
-        });
-
-        window.downloadQR = async () => {
-            const imageUrl = document.getElementById('qrImage').src;
+        async function downloadQR() {
+            const imageUrl = "https://i.ibb.co/ksM3hDHw/POUNLIYSYJYVFBF.jpg";
             try {
                 const response = await fetch(imageUrl);
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'DPS_Stories_QR.jpg';
+                a.download = 'DPS_Payment_QR.jpg';
                 document.body.appendChild(a);
                 a.click();
-                window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
-            } catch (error) {
+                window.URL.revokeObjectURL(url);
+            } catch (e) {
+                // Fallback for some mobile browsers
                 window.open(imageUrl, '_blank');
             }
-        };
+        }
+
+        // Close modal on click outside
+        window.onclick = (e) => {
+            const modal = document.getElementById('tcModal');
+            if (e.target == modal) modal.style.display = 'none';
+        }
     </script>
 </body>
 </html>
