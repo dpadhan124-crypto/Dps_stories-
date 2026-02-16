@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Daitari Premium | Stories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #080808;
+            --accent: #EAB308; /* Premium Gold */
+            --card-bg: #121212;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-black);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden; /* Prevent body scroll, use container scroll */
+        }
+
+        /* Mobile App Container */
+        .app-shell {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Top Horizontal Story Scroller */
+        .story-scroller {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            height: 82vh;
+        }
+
+        .story-scroller::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-page {
+            min-width: 100vw;
+            height: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+        }
+
+        /* Cover Image Styling */
+        .cover-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, 
+                rgba(8,8,8,0.2) 0%, 
+                rgba(8,8,8,0.5) 40%, 
+                rgba(8,8,8,0.9) 85%, 
+                var(--bg-black) 100%);
+            z-index: -1;
+        }
+
+        /* Typography & Details */
+        .story-meta {
+            animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Fixed Bottom Action Area */
+        .bottom-action {
+            height: 18vh;
+            background: var(--bg-black);
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            z-index: 50;
+        }
+
+        .btn-subscribe {
+            background: var(--accent);
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 18px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(234, 179, 8, 0.3);
+            transition: transform 0.2s active;
+        }
+
+        .btn-subscribe:active {
+            transform: scale(0.97);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 30px;
+            height: 3px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--accent);
+        }
+
+        .badge {
+            background: rgba(234, 179, 8, 0.15);
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 12px;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        
+        <!-- Progress Indicators -->
+        <div class="scroll-indicator">
+            <div class="dot active" id="dot-0"></div>
+            <div class="dot" id="dot-1"></div>
+        </div>
+
+        <!-- Horizontal Story Scroller -->
+        <main class="story-scroller" id="scroller">
+            
+            <!-- Story 1: Shunya Samrat -->
+            <section class="story-page">
+                <img src="https://i.ibb.co/tV49W8C/LPEAQGNTSMYCAAK.jpgauto=format&fit=crop" class="cover-img" alt="Shunya Samrat Cover">
+                <div class="overlay"></div>
+                
+                <div class="story-meta">
+                    <span class="badge">ACTION     FANTACY    STORY</span>
+                    <h1 class="text-4xl font-extrabold mb-2 leading-tight">Shunya Samrat</h1>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        धरती के कमांडो, आकाश की आत्मा, उसके मर्डर के बाद दूसरी दुनिया में चली जाती है। इस दुनिया में, लोग अलग-अलग मार्शल आर्ट्स की नॉलेज ले सकते हैं और वॉरियर बन सकते हैं। सिर्फ़ वॉरियर ही नहीं, बल्कि वे हथियार बनाने वाले, हीलर और रहस्यमयी आर्ट्स के मास्टर भी बन सकते हैं। इस दुनिया में आने पर, आकाश को एक कीमती गिफ़्ट मिलता है, जिससे वह सबसे ताकतवर वॉरियर बन सकता है। आकाश को किसने मारा? क्या वह इस नई दुनिया को अपना बना पाएगा और सर्वशक्तिमान बन पाएगा?
+                    </p>
+                    <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                        <span>Episode :   2900</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <span>Total Ch - 5000+</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <span>Ongoing....</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Story 2: The Warrior -->
+            <section class="story-page">
+                <img src="https://i.ibb.co/XxXjBnwV/ROCLRVYRCUBPXXB.jpg" class="cover-img" alt="The Warrior Cover">
+                <div class="overlay"></div>
+                
+                <div class="story-meta">
+                    <span class="badge">ACTION FANTACY STORY</span>
+                    <h1 class="text-4xl font-extrabold mb-2 leading-tight">The Warrior</h1>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        काली पहाड़ी"—एक ऐसी जगह जहाँ से गिरने वाला कभी नहीं बचता। लेकिन 27 साल का जांबाज योद्धा अथर्व देव, एक अनमोल खजाने को बचाने के लिए मौत को गले लगा लेता है।
+​पर अंत ही एक नई शुरुआत है! अथर्व की आत्मा अथर्व चुरू नाम के एक लड़के के शरीर में जागती है, जिसे उसकी अपनी शादी के दिन ज़हर दिया गया था।
+​क्या अथर्व उस रहस्यमयी खजाने की रक्षा कर पाएगा?
+​आखिर उसे शादी के दिन ज़हर क्यों दिया गया?
+​क्या एक मरा हुआ लड़का दुनिया का सबसे खतरनाक योद्धा बन पाएगा?
+                    </p>
+                    <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                        <span>Episode : 2100+</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <span>tota Ch -2165+</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <span>Ongoing...</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Fixed Bottom Subscription Area -->
+        <footer class="bottom-action">
+            <button class="bg-white/5 text-white py-4 rounded-2xl text-[20px] font-bold border border-white/10 flex items-center justify-center gap-2" onclick="window.location.href='https://t.me/dps_supportbot'">
+                Subscribe to Premium
+            </button>
+          
+            
+        </footer>
+
+    </div>
+
+    <script>
+        const scroller = document.getElementById('scroller');
+        const dots = [document.getElementById('dot-0'), document.getElementById('dot-1')];
+
+        // Track scroll position to update dots
+        scroller.addEventListener('scroll', () => {
+            const index = Math.round(scroller.scrollLeft / window.innerWidth);
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        });
+
+        // Prevent standard bounce on iOS
+        document.body.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.story-scroller')) return;
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
